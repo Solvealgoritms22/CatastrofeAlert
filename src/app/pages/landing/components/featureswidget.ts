@@ -1,14 +1,23 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { Table } from 'primeng/table';
+import { HttpClient } from '@angular/common/http';
+
+interface Paciente {
+    id?: string;
+    nombre: string;
+    edad: number;
+    centroMedico: string;
+    observaciones: string;
+}
 
 @Component({
     selector: 'features-widget',
     standalone: true,
     imports: [CommonModule, TableModule],
     template: `
-<div class="p-4">
+        <div class="p-4">
             <div class="flex justify-center items-center mb-2">
                 <img src="https://daeh.gob.do/wp-content/uploads/2023/04/logo-daeh-00.png" alt="DAFH Logo" style="width:250px;" />
             </div>
@@ -59,7 +68,7 @@ import { Table } from 'primeng/table';
         </div>
     `
 })
-export class FeaturesWidget {
+export class FeaturesWidget implements OnInit {
     @ViewChild('dt') table!: Table;
 
     @Input() set searchTerm(value: string) {
@@ -68,83 +77,38 @@ export class FeaturesWidget {
             this.scrollToFirstMatch(value);
         }
     }
-    registroPacientes = [
-        {
-            nombre: 'Alfred Guillermo Gil',
-            edad: 33,
-            centroMedico: 'Clínica Abreu',
-            observaciones: 'UCI Politraumatizado'
-        },
-        {
-            nombre: 'María Martínez García',
-            edad: 36,
-            centroMedico: 'Clínica Abreu',
-            observaciones: 'Ingreso'
-        },
-        {
-            nombre: 'Adolf Murray',
-            edad: 42,
-            centroMedico: 'Hospital Traumatológico Dr. Ney Arias Lora',
-            observaciones: 'Referido a otro Centro'
-        },
-        {
-            nombre: 'Paola Sánchez',
-            edad: 25,
-            centroMedico: 'Hospital Docente Dr. Darío Contreras',
-            observaciones: 'Atención Médica UCI'
-        },
-        {
-            nombre: 'Paola Sánchez',
-            edad: 25,
-            centroMedico: 'Hospital Docente Dr. Darío Contreras',
-            observaciones: 'Atención Médica UCI'
-        },
-        {
-            nombre: 'Paola Sánchez',
-            edad: 25,
-            centroMedico: 'Hospital Docente Dr. Darío Contreras',
-            observaciones: 'Atención Médica UCI'
-        },
-        {
-            nombre: 'Paola Sánchez',
-            edad: 25,
-            centroMedico: 'Hospital Docente Dr. Darío Contreras',
-            observaciones: 'Atención Médica UCI'
-        },
-        {
-            nombre: 'Paola Sánchez',
-            edad: 25,
-            centroMedico: 'Hospital Docente Dr. Darío Contreras',
-            observaciones: 'Atención Médica UCI'
-        },
-        {
-            nombre: 'Paola Sánchez',
-            edad: 25,
-            centroMedico: 'Hospital Docente Dr. Darío Contreras',
-            observaciones: 'Atención Médica UCI'
-        },
-        {
-            nombre: 'Paola Sánchez',
-            edad: 25,
-            centroMedico: 'Hospital Docente Dr. Darío Contreras',
-            observaciones: 'Atención Médica UCI'
-        },
-        {
-            nombre: 'Paola Sánchez',
-            edad: 25,
-            centroMedico: 'Hospital Docente Dr. Darío Contreras',
-            observaciones: 'Atención Médica UCI'
-        },
-        {
-            nombre: 'Paola Sánchez',
-            edad: 25,
-            centroMedico: 'Hospital Docente Dr. Darío Contreras',
-            observaciones: 'Atención Médica UCI'
-        }
-        // ... Agregar más registros según sea necesario
-    ];
 
-    filteredPatients = [...this.registroPacientes];
+    registroPacientes: Paciente[] = [];
+    filteredPatients: Paciente[] = [];
+    private apiUrl = 'http://localhost:3000/pacientes';
+
+    constructor(private http: HttpClient) {}
+
+    ngOnInit() {
+        this.loadPacientes();
+    }
+
+    loadPacientes() {
+        this.http.get<Paciente[]>(this.apiUrl).subscribe({
+            next: (data) => {
+                this.registroPacientes = data;
+                this.filteredPatients = [...data];
+            },
+            error: (err) => {
+                console.error('Error al cargar pacientes:', err);
+                // Datos por defecto en caso de error
+                this.registroPacientes = [
+                    {
+                        nombre: 'Alfred Guillermo Gil',
+                        edad: 33,
+                        centroMedico: 'Clínica Abreu',
+                        observaciones: 'UCI Politraumatizado'
+                    }
+                ];
+                this.filteredPatients = [...this.registroPacientes];
+            }
+        });
+    }
 
     filterPatients(searchTerm: string) {
         if (!searchTerm) {
@@ -163,7 +127,6 @@ export class FeaturesWidget {
             );
             
             if (firstMatchIndex !== -1 && this.table) {
-                // Usamos el scroll nativo de PrimeNG Table
                 const scrollableBody = this.table.el.nativeElement.querySelector('.p-datatable-scrollable-body');
                 const row = scrollableBody.querySelector(`tr[id='row-${firstMatchIndex}']`);
                 
@@ -174,6 +137,6 @@ export class FeaturesWidget {
                     });
                 }
             }
-        }, 200); // Aumentamos el timeout para asegurar que la tabla esté renderizada
+        }, 200);
     }
 }

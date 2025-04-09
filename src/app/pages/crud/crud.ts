@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 interface Paciente {
     id?: string;
@@ -104,7 +105,7 @@ export class Crud implements OnInit {
     pacientes = signal<Paciente[]>([]);
     paciente: Paciente = { nombre: '', edad: 0, centroMedico: '', observaciones: '' };
     submitted: boolean = false;
-    private apiUrl = 'http://localhost:3000/pacientes';
+    private apiUrl = environment.apiUrl;
 
     @ViewChild('dt') dt!: Table;
 
@@ -119,7 +120,7 @@ export class Crud implements OnInit {
     }
 
     loadPacientes() {
-        this.http.get<Paciente[]>(this.apiUrl).subscribe({
+        this.http.get<Paciente[]>(`${this.apiUrl}/pacientes`).subscribe({
             next: (data) => {
                 this.pacientes.set(data);
             },
