@@ -45,8 +45,8 @@ export class AuthService {
   private mockLogin(email: string, password: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       // Credenciales de prueba
-      const mockEmail = 'test@test';
-      const mockPassword = '123456';
+      const mockEmail = 'emergencydo@admin.com';
+      const mockPassword = 'emergencydoQA123';
 
       if (email === mockEmail && password === mockPassword) {
         this._isLoggedIn = true;
@@ -179,7 +179,7 @@ private generateMockJwt(email: string): string {
         id: 1,
         img: 'images/profiles/testuser.png',
         name: 'Fail Decode',
-        email: 'test@test',
+        email: 'emergencydo@admin.com',
         roles: ['admin']
       };
     }
