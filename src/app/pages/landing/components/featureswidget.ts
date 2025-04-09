@@ -49,6 +49,11 @@ interface Paciente {
                         <td>{{ paciente.observaciones }}</td>
                     </tr>
                 </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="4" class="text-center py-12">No hay datos</td>
+                    </tr>
+                </ng-template>
             </p-table><br>
 
             <div class="mt-28">
@@ -72,11 +77,11 @@ interface Paciente {
 export class FeaturesWidget implements OnInit {
     @ViewChild('dt') table!: Table;
 
+    private _searchTerm: string = '';
     @Input() set searchTerm(value: string) {
+        this._searchTerm = value;
         this.filterPatients(value);
-        if (value) {
-            this.scrollToFirstMatch(value);
-        }
+        this.scrollToFirstMatch(value);
     }
 
     registroPacientes: Paciente[] = [];
@@ -94,6 +99,10 @@ export class FeaturesWidget implements OnInit {
             next: (data) => {
                 this.registroPacientes = data;
                 this.filteredPatients = [...data];
+                if (this._searchTerm) {
+                    this.filterPatients(this._searchTerm);
+                    this.scrollToFirstMatch(this._searchTerm);
+                }
             },
             error: (err) => {
                 console.error('Error al cargar pacientes:', err);
@@ -104,9 +113,100 @@ export class FeaturesWidget implements OnInit {
                         edad: 33,
                         centroMedico: 'Clínica Abreu',
                         observaciones: 'UCI Politraumatizado'
+                    },
+                    {
+                        nombre: 'Abel Guzmán',
+                        edad: 0,
+                        centroMedico: 'Clínica Abreu',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Adriana De Gil',
+                        edad: 0,
+                        centroMedico: 'Clínica Abreu',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Alex Augusto Martínez García',
+                        edad: 36,
+                        centroMedico: 'Hospiten Santo Domingo',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Amanda Murray',
+                        edad: 42,
+                        centroMedico: 'Hospital Traumatológico Dr. Ney Arias Lora',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Ambar Montero',
+                        edad: 33,
+                        centroMedico: 'Hospital Traumatológico Dr. Ney Arias Lora',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Ámbar Montero',
+                        edad: 0,
+                        centroMedico: 'Hospital Traumatológico Dr. Ney Arias Lora',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Ana María Fernández',
+                        edad: 0,
+                        centroMedico: 'Clínica Independencia',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Ana Montero',
+                        edad: 32,
+                        centroMedico: 'Hospital Traumatológico Dr. Ney Arias Lora',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Ana Ramirez',
+                        edad: 39,
+                        centroMedico: 'Hospital General de la Plaza de la Salud',
+                        observaciones: 'UCI Polivalente'
+                    },
+                    {
+                        nombre: 'Anastasio Peguero Concepcion',
+                        edad: 56,
+                        centroMedico: 'Hospital Central De las Fuerzas Armadas',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Anny Marisol Aybar',
+                        edad: 0,
+                        centroMedico: 'Hospital Regional Doctor Marcelino Vélez Santana, Hospital Central de las Fuerzas Armadas',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Anny Montero',
+                        edad: 0,
+                        centroMedico: 'Hospital Traumatológico Dr. Ney Arias Lora',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Aracelis Altagracia Santana',
+                        edad: 0,
+                        centroMedico: 'Centro Médico UCE',
+                        observaciones: ''
+                    },
+                    {
+                        nombre: 'Berenice Enrique Baez',
+                        edad: 35,
+                        centroMedico: 'Hospital Central De las Fuerzas Armadas',
+                        observaciones: 'Referido a otro Centro'
                     }
+                    
+                    
+                    
                 ];
                 this.filteredPatients = [...this.registroPacientes];
+                if (this._searchTerm) {
+                    this.filterPatients(this._searchTerm);
+                    this.scrollToFirstMatch(this._searchTerm);
+                }
             }
         });
     }
@@ -122,22 +222,46 @@ export class FeaturesWidget implements OnInit {
     }
 
     scrollToFirstMatch(searchTerm: string) {
+        if (!searchTerm || !this.table) return;
+
+        // Usamos setTimeout con un pequeño retraso para asegurar el renderizado
         setTimeout(() => {
-            const firstMatchIndex = this.registroPacientes.findIndex(paciente =>
+            const tableElement = this.table.el.nativeElement;
+            const scrollContainer = tableElement.querySelector('.p-datatable-scrollable-body');
+            
+            if (!scrollContainer) return;
+
+            // Calculamos la posición de la tabla respecto al documento
+            const tableRect = tableElement.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const offset = tableRect.top + window.scrollY - (windowHeight / 2) + (tableRect.height / 2);
+
+            // Primero hacemos scroll a la tabla, centrándola en la ventana
+            window.scrollTo({
+                top: offset,
+                behavior: 'smooth'
+            });
+
+            // Luego hacemos scroll al primer resultado dentro de la tabla
+            const firstMatchIndex = this.filteredPatients.findIndex(paciente =>
                 paciente.nombre.toLowerCase().includes(searchTerm.toLowerCase())
             );
-            
-            if (firstMatchIndex !== -1 && this.table) {
-                const scrollableBody = this.table.el.nativeElement.querySelector('.p-datatable-scrollable-body');
-                const row = scrollableBody.querySelector(`tr[id='row-${firstMatchIndex}']`);
-                
+
+            if (firstMatchIndex !== -1) {
+                const row = scrollContainer.querySelector(`tr[id='row-${firstMatchIndex}']`);
                 if (row) {
-                    row.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'center' 
+                    // Calculamos la posición exacta de la fila dentro del contenedor
+                    const rowOffset = row.offsetTop - scrollContainer.offsetTop;
+                    const scrollContainerHeight = scrollContainer.clientHeight;
+                    const rowHeight = row.offsetHeight;
+                    
+                    // Centramos la fila en el contenedor scrollable
+                    scrollContainer.scrollTo({
+                        top: rowOffset - (scrollContainerHeight / 2) + (rowHeight / 2),
+                        behavior: 'smooth'
                     });
                 }
             }
-        }, 200);
+        }, 100); // Pequeño retraso para asegurar que el DOM esté listo
     }
 }
