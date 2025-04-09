@@ -46,7 +46,7 @@ import { FormsModule } from '@angular/forms';
                 <button 
                     type="button" 
                     (click)="search()"
-                    class="button-gradient w-full lg:w-auto flex bg-slate-50 text-black items-center justify-center gap-2 px-6 py-3 rounded-full">
+                    class="button-gradient w-full lg:w-auto flex bg-slate-50 border-0 text-black items-center justify-center gap-2 px-6 py-3 rounded-full">
                     <i class="pi pi-search"></i>
                     <span>Buscar</span>
                 </button>
