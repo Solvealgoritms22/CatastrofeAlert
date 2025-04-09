@@ -9,7 +9,7 @@ import { ScrollTop } from 'primeng/scrolltop';
     standalone: true,
     imports: [RouterModule, ScrollTop],
     template: `<router-outlet>
-        <p-scrolltop [threshold]="100" icon="pi pi-arrow-up" [buttonProps]="{ raised: true, rounded: true }" />
+        <p-scrolltop [threshold]="100" icon="pi pi-arrow-up" [buttonProps]="{ severity: 'contrast', raised: true, rounded: true }" />
     </router-outlet>`
 })
 export class AppComponent implements OnInit {
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
         this.translateService.setDefaultLang('es');
 
         // (Opcional) Podrías sobrescribir configService.appName aquí
-        this.configService.appName = 'Cosevi';
+        this.configService.appName = 'EmergenciasDO';
     }
 
     switchToEnglish() {

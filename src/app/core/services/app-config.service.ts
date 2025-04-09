@@ -3,5 +3,5 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class AppConfigService {
-  appName = 'MiSuperApp';  // Valor global (puedes setearlo en runtime si necesitas)
+  appName = 'EmergenciasDO';  // Valor global (puedes setearlo en runtime si necesitas)
 }
