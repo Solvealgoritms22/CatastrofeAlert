@@ -26,15 +26,16 @@ export class AppMenu {
                 routerLink: ['/pages'],
                 items: [
                     {
-                        label: 'Landing',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/']
-                    },
-                    {
                         label: 'Crud Emergency',
                         icon: 'pi pi-fw pi-pencil',
                         routerLink: ['/app/crud']
                     },
+                    {
+                        label: 'Landing',
+                        icon: 'pi pi-fw pi-globe',
+                        routerLink: ['/']
+                    },
+
                 ]
             },
         ];

@@ -57,13 +57,13 @@ import { Router, RouterModule } from '@angular/router';
                         <!-- Actualizaciones -->
                         <div class="col-span-12 md:col-span-3">
                             <h4 class="font-medium text-2xl leading-normal mb-6 text-surface-900 dark:text-surface-0">Actualizaciones</h4>
-                            <a href="https://www.emergencia.do/noticias" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
+                            <a href="#" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 Noticias de Emergencia
                             </a>
-                            <a href="https://www.emergencia.do/reportes" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
+                            <a href="#" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 Reportes en Vivo
                             </a>
-                            <a href="https://www.emergencia.do/alertas" target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
+                            <a href="#" target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
                                 Alertas y Avisos
                             </a>
                         </div>
@@ -71,13 +71,13 @@ import { Router, RouterModule } from '@angular/router';
                         <!-- Protocolos y Recursos -->
                         <div class="col-span-12 md:col-span-3">
                             <h4 class="font-medium text-2xl leading-normal mb-6 text-surface-900 dark:text-surface-0">Protocolos y Recursos</h4>
-                            <a href="https://www.emergencia.do/guia-rescate" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
+                            <a href="#" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 Guías de Rescate
                             </a>
-                            <a href="https://www.emergencia.do/procedimientos" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
+                            <a href="#" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 Procedimientos de Emergencia
                             </a>
-                            <a href="https://www.emergencia.do/contacto" target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
+                            <a href="#" target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
                                 Contacto de Emergencia
                             </a>
                         </div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { Table } from 'primeng/table';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 interface Paciente {
     id?: string;
@@ -17,7 +18,7 @@ interface Paciente {
     standalone: true,
     imports: [CommonModule, TableModule],
     template: `
-        <div class="p-4">
+        <br><div class="p-4">
             <div class="flex justify-center items-center mb-2">
                 <img src="https://daeh.gob.do/wp-content/uploads/2023/04/logo-daeh-00.png" alt="DAFH Logo" style="width:250px;" />
             </div>
@@ -48,14 +49,14 @@ interface Paciente {
                         <td>{{ paciente.observaciones }}</td>
                     </tr>
                 </ng-template>
-            </p-table>
+            </p-table><br>
 
             <div class="mt-28">
                 <h2 class="text-xl font-bold mb-2 text-center">Video en Vivo del Suceso</h2>
                 <div class="flex justify-center">
                     <div class="relative" style="width: 100%; max-width: 1200px; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem;">
                         <iframe
-                            class="absolute top-0 left-0 w-full h-full rounded-lg"
+                            class="absolute top-0 left-0 w-full h-[600px] rounded-lg"
                             src="https://www.youtube-nocookie.com/embed/eQ8YjRSJFvM"
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -80,7 +81,7 @@ export class FeaturesWidget implements OnInit {
 
     registroPacientes: Paciente[] = [];
     filteredPatients: Paciente[] = [];
-    private apiUrl = 'http://localhost:3000/pacientes';
+    private apiUrl = environment.apiUrl;
 
     constructor(private http: HttpClient) {}
 
@@ -89,7 +90,7 @@ export class FeaturesWidget implements OnInit {
     }
 
     loadPacientes() {
-        this.http.get<Paciente[]>(this.apiUrl).subscribe({
+        this.http.get<Paciente[]>(`${this.apiUrl}/pacientes`).subscribe({
             next: (data) => {
                 this.registroPacientes = data;
                 this.filteredPatients = [...data];

@@ -8,8 +8,6 @@ import { DividerModule } from 'primeng/divider';
 import { TopbarWidget } from './components/topbarwidget.component';
 import { HeroWidget } from './components/herowidget';
 import { FeaturesWidget } from './components/featureswidget';
-import { HighlightsWidget } from './components/highlightswidget';
-import { PricingWidget } from './components/pricingwidget';
 import { FooterWidget } from './components/footerwidget';
 import { LayoutService } from '../../core/services/layout.service';
 
@@ -50,13 +48,11 @@ export class Landing implements OnInit {
         // Recupera el valor guardado; si no hay valor, por defecto se establece true (o false, según prefieras)
         const storedTheme = localStorage.getItem('darkTheme');
         const darkTheme = storedTheme !== null ? storedTheme === 'true' : true;
-
+    
         // Actualiza la configuración en el LayoutService
         this.layoutService.layoutConfig.update(state => ({ ...state, darkTheme }));
-
-        // Cada vez que se actualice la configuración, asegúrate de que también se guarde en localStorage.
-        // Esto puede hacerse dentro del LayoutService o aquí, dependiendo de la arquitectura que uses.
     }
+    
 
     currentSearch: string = '';
 
