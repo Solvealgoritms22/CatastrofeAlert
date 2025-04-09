@@ -18,7 +18,7 @@ interface Paciente {
     standalone: true,
     imports: [CommonModule, TableModule],
     template: `
-        <br><div class="p-4">
+        <div class="p-4">
             <div class="flex justify-center items-center mb-2">
                 <img src="https://daeh.gob.do/wp-content/uploads/2023/04/logo-daeh-00.png" alt="DAFH Logo" style="width:250px;" />
             </div>
@@ -32,7 +32,7 @@ interface Paciente {
                 [rows]="10" 
                 scrollable="true" 
                 scrollHeight="400px" 
-                class="p-datatable-gridlines p-datatable-sm">
+                class="p-datatable-gridlines p-datatable-sm -z-10">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Nombre</th>

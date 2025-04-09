@@ -24,10 +24,12 @@ import { ButtonModule } from 'primeng/button';
           </span>
         </div>
         <!-- Texto para dispositivos móviles (visible solo en mobile) -->
-        <div class="block lg:hidden mt-2">
+        <div class="flex lg:hidden mt-2">
           <span class="text-surface-900 dark:text-surface-0 font-medium text-base">
             Dona sangre: 809-604-3327
+            <i class="fa-duotone fa-solid fa-hand-holding-droplet fa-lg"></i>
           </span>
+
         </div>
       </a>
 
