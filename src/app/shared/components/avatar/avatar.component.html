@@ -1,0 +1,43 @@
+<div class="avatar-container">
+    <!-- Si NO hay error, mostramos la lógica de imagen + spinner -->
+    <ng-container *ngIf="!error; else initialsFallback">
+      <!-- Spinner de PrimeNG mientras se carga la imagen -->
+      <p-progressSpinner
+        *ngIf="!imageLoaded"
+        styleClass="avatar-spinner"
+        strokeWidth="3"
+        animationDuration=".5s"
+        [style.width.px]="avatarSize"
+        [style.height.px]="avatarSize"
+      ></p-progressSpinner>
+      
+      <!-- La imagen se muestra cuando ya se cargó -->
+      <img
+        class="avatar-image"
+        [class.hidden]="!imageLoaded"
+        [src]="imgUrl"
+        [alt]="username"
+        (load)="onImageLoad()"
+        (error)="onImageError()"
+        [style.width.px]="avatarSize"
+        [style.height.px]="avatarSize"
+      />
+    </ng-container>
+  
+    <!-- Si hay error, mostramos las iniciales del usuario -->
+    <ng-template #initialsFallback>
+      <div class="avatar-initials"
+      [style.width.px]="avatarSize"
+      [style.height.px]="avatarSize"
+      [style.fontSize.px]="textSize"
+      >{{ initials }}</div>
+    </ng-template>
+  
+    <!-- Texto debajo de la imagen/iniciales -->
+    <div class="avatar-text">
+      <div class="avatar-username" [style.fontSize.px]="textSize + 2">{{ username }}</div>
+      <!-- Mostrar email solo si existe -->
+      <div class="avatar-email" *ngIf="email" [style.fontSize.px]="textSize">{{ email }}</div>
+    </div>
+  </div>
+  
