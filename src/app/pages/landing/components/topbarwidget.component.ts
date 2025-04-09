@@ -26,7 +26,7 @@ import { ButtonModule } from 'primeng/button';
         <!-- Texto para dispositivos móviles (visible solo en mobile) -->
         <div class="flex lg:hidden mt-2">
           <span class="text-surface-900 dark:text-surface-0 font-medium text-base">
-            <p>Ayuda a salvar vidas llamando al +1 809-604-3327</p>
+            <p>Ayuda a salvar vidas llama al +1 809-604-3327</p>
           </span>
 
         </div>

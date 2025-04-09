@@ -26,16 +26,16 @@ import { Router, RouterModule } from '@angular/router';
                         <!-- Organismos de Rescate -->
                         <div class="col-span-12 md:col-span-3">
                             <h4 class="font-medium text-2xl leading-normal mb-6 text-surface-900 dark:text-surface-0">Organismos de Rescate</h4>
-                            <a href="https://www.emergencia.do/coe" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
+                            <a href="https://www.coe.gob.do/" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 COE
                             </a>
-                            <a href="https://www.policianacional.gov.do" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
+                            <a href="https://www.policianacional.gob.do/" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 Policía Nacional
                             </a>
-                            <a href="https://www.bomberos.gov.do" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
+                            <a href="https://cbdn.gob.do/" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 Bomberos
                             </a>
-                            <a href="https://www.defensacivil.gov.do" target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
+                            <a href="https://defensacivil.gob.do/" target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
                                 Defensa Civil
                             </a>
                         </div>
@@ -46,10 +46,10 @@ import { Router, RouterModule } from '@angular/router';
                             <a href="https://www.911.gob.do" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 Sistema 9-1-1
                             </a>
-                            <a href="https://www.mop.gob.do" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
+                            <a href="https://www.mopc.gob.do/" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 Ministerio de Obras Públicas
                             </a>
-                            <a href="https://www.mindef.gob.do" target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
+                            <a href="https://mide.gob.do/" target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
                                 Ministerio de Defensa
                             </a>
                         </div>
@@ -57,13 +57,13 @@ import { Router, RouterModule } from '@angular/router';
                         <!-- Actualizaciones -->
                         <div class="col-span-12 md:col-span-3">
                             <h4 class="font-medium text-2xl leading-normal mb-6 text-surface-900 dark:text-surface-0">Actualizaciones</h4>
-                            <a href="#" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
+                            <a href="https://www.coe.gob.do/index.php/noticias" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 Noticias de Emergencia
                             </a>
                             <a href="#" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 Reportes en Vivo
                             </a>
-                            <a href="#" target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
+                            <a href="https://www.coe.gob.do/index.php/alertas/emision-de-alertas" target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
                                 Alertas y Avisos
                             </a>
                         </div>
@@ -77,7 +77,7 @@ import { Router, RouterModule } from '@angular/router';
                             <a href="#" target="_blank" class="leading-normal text-xl block cursor-pointer mb-2 text-surface-700 dark:text-surface-100">
                                 Procedimientos de Emergencia
                             </a>
-                            <a href="#" target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
+                            <a href="https://911.gob.do/como-usarlo/#:~:text=Al%20realizar%20una%20llamada%20al,unidad%20m%C3%A1s%20cercana%20al%20suceso." target="_blank" class="leading-normal text-xl block cursor-pointer text-surface-700 dark:text-surface-100">
                                 Contacto de Emergencia
                             </a>
                         </div>
