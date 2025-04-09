@@ -1,139 +1,179 @@
-import { Component } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TableModule } from 'primeng/table';
+import { Table } from 'primeng/table';
 
 @Component({
     selector: 'features-widget',
     standalone: true,
-    imports: [CommonModule],
-    template: ` <div id="features" class="py-6 px-6 lg:px-20 mt-8 mx-0 lg:mx-20">
-        <div class="grid grid-cols-12 gap-4 justify-center">
-            <div class="col-span-12 text-center mt-20 mb-6">
-                <div class="text-surface-900 dark:text-surface-0 font-normal mb-2 text-4xl">Marvelous Features</div>
-                <span class="text-muted-color text-2xl">Placerat in egestas erat...</span>
+    imports: [CommonModule, TableModule],
+    template: `
+<div class="p-4">
+            <div class="flex justify-center items-center mb-2">
+                <img src="https://daeh.gob.do/wp-content/uploads/2023/04/logo-daeh-00.png" alt="DAFH Logo" style="width:250px;" />
             </div>
 
-            <div class="col-span-12 md:col-span-12 lg:col-span-4 p-0 lg:pr-8 lg:pb-8 mt-6 lg:mt-0">
-                <div style="height: 160px; padding: 2px; border-radius: 10px; background: linear-gradient(90deg, rgba(253, 228, 165, 0.2), rgba(187, 199, 205, 0.2)), linear-gradient(180deg, rgba(253, 228, 165, 0.2), rgba(187, 199, 205, 0.2))">
-                    <div class="p-4 bg-surface-0 dark:bg-surface-900 h-full" style="border-radius: 8px">
-                        <div class="flex items-center justify-center bg-yellow-200 mb-4" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
-                            <i class="pi pi-fw pi-users !text-2xl text-yellow-700"></i>
-                        </div>
-                        <h5 class="mb-2 text-surface-900 dark:text-surface-0">Easy to Use</h5>
-                        <span class="text-surface-600 dark:text-surface-200">Posuere morbi leo urna molestie.</span>
+            <h2 class="text-xl font-bold mb-2 text-center">TIPIFICADO: Rescate</h2>
+            <p class="mb-6 text-center">Personal de la unidad reporta que se trata del derrumbe del techo de la discoteca Jet Set, donde están reportándose personas atrapadas y fallecidas.</p>
+
+            <p-table 
+                #dt
+                [value]="filteredPatients" 
+                [rows]="10" 
+                scrollable="true" 
+                scrollHeight="400px" 
+                class="p-datatable-gridlines p-datatable-sm">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Centro Médico</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-paciente let-rowIndex="rowIndex">
+                    <tr [attr.id]="'row-' + rowIndex">
+                        <td>{{ paciente.nombre }}</td>
+                        <td>{{ paciente.edad }}</td>
+                        <td>{{ paciente.centroMedico }}</td>
+                        <td>{{ paciente.observaciones }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            <div class="mt-28">
+                <h2 class="text-xl font-bold mb-2 text-center">Video en Vivo del Suceso</h2>
+                <div class="flex justify-center">
+                    <div class="relative" style="width: 100%; max-width: 1200px; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem;">
+                        <iframe
+                            class="absolute top-0 left-0 w-full h-full rounded-lg"
+                            src="https://www.youtube-nocookie.com/embed/eQ8YjRSJFvM"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        >
+                        </iframe>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-span-12 md:col-span-12 lg:col-span-4 p-0 lg:pr-8 lg:pb-8 mt-6 lg:mt-0">
-                <div style="height: 160px; padding: 2px; border-radius: 10px; background: linear-gradient(90deg, rgba(145, 226, 237, 0.2), rgba(251, 199, 145, 0.2)), linear-gradient(180deg, rgba(253, 228, 165, 0.2), rgba(172, 180, 223, 0.2))">
-                    <div class="p-4 bg-surface-0 dark:bg-surface-900 h-full" style="border-radius: 8px">
-                        <div class="flex items-center justify-center bg-cyan-200 mb-4" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
-                            <i class="pi pi-fw pi-palette !text-2xl text-cyan-700"></i>
-                        </div>
-                        <h5 class="mb-2 text-surface-900 dark:text-surface-0">Fresh Design</h5>
-                        <span class="text-surface-600 dark:text-surface-200">Semper risus in hendrerit.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-span-12 md:col-span-12 lg:col-span-4 p-0 lg:pb-8 mt-6 lg:mt-0">
-                <div style="height: 160px; padding: 2px; border-radius: 10px; background: linear-gradient(90deg, rgba(145, 226, 237, 0.2), rgba(172, 180, 223, 0.2)), linear-gradient(180deg, rgba(172, 180, 223, 0.2), rgba(246, 158, 188, 0.2))">
-                    <div class="p-4 bg-surface-0 dark:bg-surface-900 h-full" style="border-radius: 8px">
-                        <div class="flex items-center justify-center bg-indigo-200" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
-                            <i class="pi pi-fw pi-map !text-2xl text-indigo-700"></i>
-                        </div>
-                        <div class="mt-6 mb-1 text-surface-900 dark:text-surface-0 text-xl font-semibold">Well Documented</div>
-                        <span class="text-surface-600 dark:text-surface-200">Non arcu risus quis varius quam quisque.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-span-12 md:col-span-12 lg:col-span-4 p-0 lg:pr-8 lg:pb-8 mt-6 lg:mt-0">
-                <div style="height: 160px; padding: 2px; border-radius: 10px; background: linear-gradient(90deg, rgba(187, 199, 205, 0.2), rgba(251, 199, 145, 0.2)), linear-gradient(180deg, rgba(253, 228, 165, 0.2), rgba(145, 210, 204, 0.2))">
-                    <div class="p-4 bg-surface-0 dark:bg-surface-900 h-full" style="border-radius: 8px">
-                        <div class="flex items-center justify-center bg-slate-200 mb-4" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
-                            <i class="pi pi-fw pi-id-card !text-2xl text-slate-700"></i>
-                        </div>
-                        <div class="mt-6 mb-1 text-surface-900 dark:text-surface-0 text-xl font-semibold">Responsive Layout</div>
-                        <span class="text-surface-600 dark:text-surface-200">Nulla malesuada pellentesque elit.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-span-12 md:col-span-12 lg:col-span-4 p-0 lg:pr-8 lg:pb-8 mt-6 lg:mt-0">
-                <div style="height: 160px; padding: 2px; border-radius: 10px; background: linear-gradient(90deg, rgba(187, 199, 205, 0.2), rgba(246, 158, 188, 0.2)), linear-gradient(180deg, rgba(145, 226, 237, 0.2), rgba(160, 210, 250, 0.2))">
-                    <div class="p-4 bg-surface-0 dark:bg-surface-900 h-full" style="border-radius: 8px">
-                        <div class="flex items-center justify-center bg-orange-200 mb-4" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
-                            <i class="pi pi-fw pi-star !text-2xl text-orange-700"></i>
-                        </div>
-                        <div class="mt-6 mb-1 text-surface-900 dark:text-surface-0 text-xl font-semibold">Clean Code</div>
-                        <span class="text-surface-600 dark:text-surface-200">Condimentum lacinia quis vel eros.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-span-12 md:col-span-12 lg:col-span-4 p-0 lg:pb-8 mt-6 lg:mt-0">
-                <div style="height: 160px; padding: 2px; border-radius: 10px; background: linear-gradient(90deg, rgba(251, 199, 145, 0.2), rgba(246, 158, 188, 0.2)), linear-gradient(180deg, rgba(172, 180, 223, 0.2), rgba(212, 162, 221, 0.2))">
-                    <div class="p-4 bg-surface-0 dark:bg-surface-900 h-full" style="border-radius: 8px">
-                        <div class="flex items-center justify-center bg-pink-200 mb-4" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
-                            <i class="pi pi-fw pi-moon !text-2xl text-pink-700"></i>
-                        </div>
-                        <div class="mt-6 mb-1 text-surface-900 dark:text-surface-0 text-xl font-semibold">Dark Mode</div>
-                        <span class="text-surface-600 dark:text-surface-200">Convallis tellus id interdum velit laoreet.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-span-12 md:col-span-12 lg:col-span-4 p-0 lg:pr-8 mt-6 lg:mt-0">
-                <div style="height: 160px; padding: 2px; border-radius: 10px; background: linear-gradient(90deg, rgba(145, 210, 204, 0.2), rgba(160, 210, 250, 0.2)), linear-gradient(180deg, rgba(187, 199, 205, 0.2), rgba(145, 210, 204, 0.2))">
-                    <div class="p-4 bg-surface-0 dark:bg-surface-900 h-full" style="border-radius: 8px">
-                        <div class="flex items-center justify-center bg-teal-200 mb-4" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
-                            <i class="pi pi-fw pi-shopping-cart !text-2xl text-teal-700"></i>
-                        </div>
-                        <div class="mt-6 mb-1 text-surface-900 dark:text-surface-0 text-xl font-semibold">Ready to Use</div>
-                        <span class="text-surface-600 dark:text-surface-200">Mauris sit amet massa vitae.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-span-12 md:col-span-12 lg:col-span-4 p-0 lg:pr-8 mt-6 lg:mt-0">
-                <div style="height: 160px; padding: 2px; border-radius: 10px; background: linear-gradient(90deg, rgba(145, 210, 204, 0.2), rgba(212, 162, 221, 0.2)), linear-gradient(180deg, rgba(251, 199, 145, 0.2), rgba(160, 210, 250, 0.2))">
-                    <div class="p-4 bg-surface-0 dark:bg-surface-900 h-full" style="border-radius: 8px">
-                        <div class="flex items-center justify-center bg-blue-200 mb-4" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
-                            <i class="pi pi-fw pi-globe !text-2xl text-blue-700"></i>
-                        </div>
-                        <div class="mt-6 mb-1 text-surface-900 dark:text-surface-0 text-xl font-semibold">Modern Practices</div>
-                        <span class="text-surface-600 dark:text-surface-200">Elementum nibh tellus molestie nunc non.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-span-12 md:col-span-12 lg:col-span-4 p-0 lg-4 mt-6 lg:mt-0">
-                <div style="height: 160px; padding: 2px; border-radius: 10px; background: linear-gradient(90deg, rgba(160, 210, 250, 0.2), rgba(212, 162, 221, 0.2)), linear-gradient(180deg, rgba(246, 158, 188, 0.2), rgba(212, 162, 221, 0.2))">
-                    <div class="p-4 bg-surface-0 dark:bg-surface-900 h-full" style="border-radius: 8px">
-                        <div class="flex items-center justify-center bg-purple-200 mb-4" style="width: 3.5rem; height: 3.5rem; border-radius: 10px">
-                            <i class="pi pi-fw pi-eye !text-2xl text-purple-700"></i>
-                        </div>
-                        <div class="mt-6 mb-1 text-surface-900 dark:text-surface-0 text-xl font-semibold">Privacy</div>
-                        <span class="text-surface-600 dark:text-surface-200">Neque egestas congue quisque.</span>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                class="col-span-12 mt-20 mb-20 p-2 md:p-20"
-                style="border-radius: 20px; background: linear-gradient(0deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), radial-gradient(77.36% 256.97% at 77.36% 57.52%, #efe1af 0%, #c3dcfa 100%)"
-            >
-                <div class="flex flex-col justify-center items-center text-center px-4 py-4 md:py-0">
-                    <div class="text-gray-900 mb-2 text-3xl font-semibold">Joséphine Miller</div>
-                    <span class="text-gray-600 text-2xl">Peak Interactive</span>
-                    <p class="text-gray-900 sm:line-height-2 md:line-height-4 text-2xl mt-6" style="max-width: 800px">
-                        “Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.”
-                    </p>
-                    <img src="https://primefaces.org/cdn/templates/sakai/landing/peak-logo.svg" class="mt-6" alt="Company logo" />
                 </div>
             </div>
         </div>
-    </div>`
+    `
 })
-export class FeaturesWidget {}
+export class FeaturesWidget {
+    @ViewChild('dt') table!: Table;
+
+    @Input() set searchTerm(value: string) {
+        this.filterPatients(value);
+        if (value) {
+            this.scrollToFirstMatch(value);
+        }
+    }
+    registroPacientes = [
+        {
+            nombre: 'Alfred Guillermo Gil',
+            edad: 33,
+            centroMedico: 'Clínica Abreu',
+            observaciones: 'UCI Politraumatizado'
+        },
+        {
+            nombre: 'María Martínez García',
+            edad: 36,
+            centroMedico: 'Clínica Abreu',
+            observaciones: 'Ingreso'
+        },
+        {
+            nombre: 'Adolf Murray',
+            edad: 42,
+            centroMedico: 'Hospital Traumatológico Dr. Ney Arias Lora',
+            observaciones: 'Referido a otro Centro'
+        },
+        {
+            nombre: 'Paola Sánchez',
+            edad: 25,
+            centroMedico: 'Hospital Docente Dr. Darío Contreras',
+            observaciones: 'Atención Médica UCI'
+        },
+        {
+            nombre: 'Paola Sánchez',
+            edad: 25,
+            centroMedico: 'Hospital Docente Dr. Darío Contreras',
+            observaciones: 'Atención Médica UCI'
+        },
+        {
+            nombre: 'Paola Sánchez',
+            edad: 25,
+            centroMedico: 'Hospital Docente Dr. Darío Contreras',
+            observaciones: 'Atención Médica UCI'
+        },
+        {
+            nombre: 'Paola Sánchez',
+            edad: 25,
+            centroMedico: 'Hospital Docente Dr. Darío Contreras',
+            observaciones: 'Atención Médica UCI'
+        },
+        {
+            nombre: 'Paola Sánchez',
+            edad: 25,
+            centroMedico: 'Hospital Docente Dr. Darío Contreras',
+            observaciones: 'Atención Médica UCI'
+        },
+        {
+            nombre: 'Paola Sánchez',
+            edad: 25,
+            centroMedico: 'Hospital Docente Dr. Darío Contreras',
+            observaciones: 'Atención Médica UCI'
+        },
+        {
+            nombre: 'Paola Sánchez',
+            edad: 25,
+            centroMedico: 'Hospital Docente Dr. Darío Contreras',
+            observaciones: 'Atención Médica UCI'
+        },
+        {
+            nombre: 'Paola Sánchez',
+            edad: 25,
+            centroMedico: 'Hospital Docente Dr. Darío Contreras',
+            observaciones: 'Atención Médica UCI'
+        },
+        {
+            nombre: 'Paola Sánchez',
+            edad: 25,
+            centroMedico: 'Hospital Docente Dr. Darío Contreras',
+            observaciones: 'Atención Médica UCI'
+        }
+        // ... Agregar más registros según sea necesario
+    ];
+
+    filteredPatients = [...this.registroPacientes];
+
+    filterPatients(searchTerm: string) {
+        if (!searchTerm) {
+            this.filteredPatients = [...this.registroPacientes];
+            return;
+        }
+        this.filteredPatients = this.registroPacientes.filter(paciente => 
+            paciente.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }
+
+    scrollToFirstMatch(searchTerm: string) {
+        setTimeout(() => {
+            const firstMatchIndex = this.registroPacientes.findIndex(paciente =>
+                paciente.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            
+            if (firstMatchIndex !== -1 && this.table) {
+                // Usamos el scroll nativo de PrimeNG Table
+                const scrollableBody = this.table.el.nativeElement.querySelector('.p-datatable-scrollable-body');
+                const row = scrollableBody.querySelector(`tr[id='row-${firstMatchIndex}']`);
+                
+                if (row) {
+                    row.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                }
+            }
+        }, 200); // Aumentamos el timeout para asegurar que la tabla esté renderizada
+    }
+}

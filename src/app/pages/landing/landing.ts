@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
@@ -10,22 +11,56 @@ import { FeaturesWidget } from './components/featureswidget';
 import { HighlightsWidget } from './components/highlightswidget';
 import { PricingWidget } from './components/pricingwidget';
 import { FooterWidget } from './components/footerwidget';
+import { LayoutService } from '../../core/services/layout.service';
 
 @Component({
     selector: 'app-landing',
     standalone: true,
-    imports: [RouterModule, TopbarWidget, HeroWidget, FeaturesWidget, HighlightsWidget, PricingWidget, FooterWidget, RippleModule, StyleClassModule, ButtonModule, DividerModule],
+    imports: [
+      CommonModule,
+      RouterModule,
+      TopbarWidget,
+      HeroWidget,
+      FeaturesWidget,
+      FooterWidget,
+      RippleModule,
+      StyleClassModule,
+      ButtonModule,
+      DividerModule
+    ],
     template: `
-        <div class="bg-surface-0 dark:bg-surface-900">
+        <!-- Se aplica ngClass para activar la clase 'dark' basado en isDarkTheme -->
+        <div [ngClass]="{'dark': isDarkTheme()}" class="bg-surface-0 dark:bg-surface-900">
             <div id="home" class="landing-wrapper overflow-hidden">
-                <topbar-widget class="py-6 px-6 mx-0 md:mx-12 lg:mx-20 lg:px-20 flex items-center justify-between relative lg:static" />
-                <hero-widget />
-                <features-widget />
-                <highlights-widget />
-                <pricing-widget />
-                <footer-widget />
+                <topbar-widget class="py-6 px-6 mx-0 md:mx-12 lg:mx-20 lg:px-20 flex items-center justify-between relative lg:static"></topbar-widget>
+                <hero-widget (searchEvent)="onSearch($event)"></hero-widget>
+                <features-widget [searchTerm]="currentSearch"></features-widget>
+                <footer-widget></footer-widget>
             </div>
         </div>
     `
 })
-export class Landing {}
+export class Landing implements OnInit {
+    private layoutService = inject(LayoutService);
+
+    // Propiedad computada para obtener el valor actual de darkTheme
+    isDarkTheme = computed(() => this.layoutService.layoutConfig().darkTheme);
+
+    ngOnInit() {
+        // Recupera el valor guardado; si no hay valor, por defecto se establece true (o false, según prefieras)
+        const storedTheme = localStorage.getItem('darkTheme');
+        const darkTheme = storedTheme !== null ? storedTheme === 'true' : true;
+
+        // Actualiza la configuración en el LayoutService
+        this.layoutService.layoutConfig.update(state => ({ ...state, darkTheme }));
+
+        // Cada vez que se actualice la configuración, asegúrate de que también se guarde en localStorage.
+        // Esto puede hacerse dentro del LayoutService o aquí, dependiendo de la arquitectura que uses.
+    }
+
+    currentSearch: string = '';
+
+    onSearch(searchTerm: string) {
+        this.currentSearch = searchTerm;
+    }
+}

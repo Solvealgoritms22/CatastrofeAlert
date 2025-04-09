@@ -4,31 +4,18 @@ import { Table, TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
-import { ToolbarModule } from 'primeng/toolbar';
-import { RatingModule } from 'primeng/rating';
 import { InputTextModule } from 'primeng/inputtext';
-import { TextareaModule } from 'primeng/textarea';
-import { SelectModule } from 'primeng/select';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
-import { TagModule } from 'primeng/tag';
-import { InputIconModule } from 'primeng/inputicon';
-import { IconFieldModule } from 'primeng/iconfield';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { Product, ProductService } from '../service/product.service';
+import { HttpClient } from '@angular/common/http';
 
-interface Column {
-    field: string;
-    header: string;
-    customExportHeader?: string;
-}
-
-interface ExportColumn {
-    title: string;
-    dataKey: string;
+interface Paciente {
+    id?: string;
+    nombre: string;
+    edad: number;
+    centroMedico: string;
+    observaciones: string;
 }
 
 @Component({
@@ -39,282 +26,175 @@ interface ExportColumn {
         TableModule,
         FormsModule,
         ButtonModule,
-        RippleModule,
         ToastModule,
-        ToolbarModule,
-        RatingModule,
         InputTextModule,
-        TextareaModule,
-        SelectModule,
-        RadioButtonModule,
-        InputNumberModule,
         DialogModule,
-        TagModule,
-        InputIconModule,
-        IconFieldModule,
         ConfirmDialogModule
     ],
     template: `
-        <p-toolbar styleClass="mb-6">
-            <ng-template #start>
-                <p-button label="New" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
-                <p-button severity="secondary" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length" />
-            </ng-template>
+        <div class="p-4">
+            <div class="mb-4">
+                <button pButton label="Nuevo Paciente" icon="pi pi-plus" class="p-button-secondary" (click)="openNew()"></button>
+            </div>
 
-            <ng-template #end>
-                <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
-            </ng-template>
-        </p-toolbar>
+            <p-table
+                #dt
+                [value]="pacientes()"
+                [rows]="10"
+                [paginator]="true"
+                [tableStyle]="{ 'min-width': '50rem' }"
+                [rowHover]="true"
+                dataKey="id"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Centro Médico</th>
+                        <th>Observaciones</th>
+                        <th>Acciones</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-paciente>
+                    <tr>
+                        <td>{{ paciente.nombre }}</td>
+                        <td>{{ paciente.edad }}</td>
+                        <td>{{ paciente.centroMedico }}</td>
+                        <td>{{ paciente.observaciones }}</td>
+                        <td>
+                            <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-text mr-2" (click)="editPaciente(paciente)"></button>
+                            <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger p-button-text" (click)="deletePaciente(paciente)"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
 
-        <p-table
-            #dt
-            [value]="products()"
-            [rows]="10"
-            [columns]="cols"
-            [paginator]="true"
-            [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-            [tableStyle]="{ 'min-width': '75rem' }"
-            [(selection)]="selectedProducts"
-            [rowHover]="true"
-            dataKey="id"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-            [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[10, 20, 30]"
-        >
-            <ng-template #caption>
-                <div class="flex items-center justify-between">
-                    <h5 class="m-0">Manage Products</h5>
-                    <p-iconfield>
-                        <p-inputicon styleClass="pi pi-search" />
-                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..." />
-                    </p-iconfield>
-                </div>
-            </ng-template>
-            <ng-template #header>
-                <tr>
-                    <th style="width: 3rem">
-                        <p-tableHeaderCheckbox />
-                    </th>
-                    <th style="min-width: 16rem">Code</th>
-                    <th pSortableColumn="name" style="min-width:16rem">
-                        Name
-                        <p-sortIcon field="name" />
-                    </th>
-                    <th>Image</th>
-                    <th pSortableColumn="price" style="min-width: 8rem">
-                        Price
-                        <p-sortIcon field="price" />
-                    </th>
-                    <th pSortableColumn="category" style="min-width:10rem">
-                        Category
-                        <p-sortIcon field="category" />
-                    </th>
-                    <th pSortableColumn="rating" style="min-width: 12rem">
-                        Reviews
-                        <p-sortIcon field="rating" />
-                    </th>
-                    <th pSortableColumn="inventoryStatus" style="min-width: 12rem">
-                        Status
-                        <p-sortIcon field="inventoryStatus" />
-                    </th>
-                    <th style="min-width: 12rem"></th>
-                </tr>
-            </ng-template>
-            <ng-template #body let-product>
-                <tr>
-                    <td style="width: 3rem">
-                        <p-tableCheckbox [value]="product" />
-                    </td>
-                    <td style="min-width: 12rem">{{ product.code }}</td>
-                    <td style="min-width: 16rem">{{ product.name }}</td>
-                    <td>
-                        <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" style="width: 64px" class="rounded" />
-                    </td>
-                    <td>{{ product.price | currency: 'USD' }}</td>
-                    <td>{{ product.category }}</td>
-                    <td>
-                        <p-rating [(ngModel)]="product.rating" [readonly]="true" />
-                    </td>
-                    <td>
-                        <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)" />
-                    </td>
-                    <td>
-                        <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" (click)="editProduct(product)" />
-                        <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteProduct(product)" />
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-
-        <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true">
-            <ng-template #content>
-                <div class="flex flex-col gap-6">
-                    <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-4" *ngIf="product.image" />
+            <p-dialog [(visible)]="pacienteDialog" [style]="{ width: '450px' }" header="Detalles del Paciente" [modal]="true">
+                <div class="flex flex-col gap-4">
                     <div>
-                        <label for="name" class="block font-bold mb-3">Name</label>
-                        <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus fluid />
-                        <small class="text-red-500" *ngIf="submitted && !product.name">Name is required.</small>
+                        <label for="nombre" class="block font-bold mb-2">Nombre</label>
+                        <input pInputText id="nombre" [(ngModel)]="paciente.nombre" required class="w-full" />
                     </div>
                     <div>
-                        <label for="description" class="block font-bold mb-3">Description</label>
-                        <textarea id="description" pTextarea [(ngModel)]="product.description" required rows="3" cols="20" fluid></textarea>
+                        <label for="edad" class="block font-bold mb-2">Edad</label>
+                        <input pInputText id="edad" type="number" [(ngModel)]="paciente.edad" required class="w-full" />
                     </div>
-
                     <div>
-                        <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
-                        <p-select [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses" optionLabel="label" optionValue="label" placeholder="Select a Status" fluid />
+                        <label for="centroMedico" class="block font-bold mb-2">Centro Médico</label>
+                        <input pInputText id="centroMedico" [(ngModel)]="paciente.centroMedico" required class="w-full" />
                     </div>
-
                     <div>
-                        <span class="block font-bold mb-4">Category</span>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category1" name="category" value="Accessories" [(ngModel)]="product.category" />
-                                <label for="category1">Accessories</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category2" name="category" value="Clothing" [(ngModel)]="product.category" />
-                                <label for="category2">Clothing</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category3" name="category" value="Electronics" [(ngModel)]="product.category" />
-                                <label for="category3">Electronics</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category4" name="category" value="Fitness" [(ngModel)]="product.category" />
-                                <label for="category4">Fitness</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-12 gap-4">
-                        <div class="col-span-6">
-                            <label for="price" class="block font-bold mb-3">Price</label>
-                            <p-inputnumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US" fluid />
-                        </div>
-                        <div class="col-span-6">
-                            <label for="quantity" class="block font-bold mb-3">Quantity</label>
-                            <p-inputnumber id="quantity" [(ngModel)]="product.quantity" fluid />
-                        </div>
+                        <label for="observaciones" class="block font-bold mb-2">Observaciones</label>
+                        <input pInputText id="observaciones" [(ngModel)]="paciente.observaciones" class="w-full" />
                     </div>
                 </div>
-            </ng-template>
+                <ng-template pTemplate="footer">
+                    <button pButton label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                    <button pButton label="Guardar" icon="pi pi-check" (click)="savePaciente()"></button>
+                </ng-template>
+            </p-dialog>
 
-            <ng-template #footer>
-                <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
-                <p-button label="Save" icon="pi pi-check" (click)="saveProduct()" />
-            </ng-template>
-        </p-dialog>
-
-        <p-confirmdialog [style]="{ width: '450px' }" />
+            <p-confirmDialog [style]="{ width: '450px' }" />
+        </div>
     `,
-    providers: [MessageService, ProductService, ConfirmationService]
+    providers: [MessageService, ConfirmationService, HttpClient]
 })
 export class Crud implements OnInit {
-    productDialog: boolean = false;
-
-    products = signal<Product[]>([]);
-
-    product!: Product;
-
-    selectedProducts!: Product[] | null;
-
+    pacienteDialog: boolean = false;
+    pacientes = signal<Paciente[]>([]);
+    paciente: Paciente = { nombre: '', edad: 0, centroMedico: '', observaciones: '' };
     submitted: boolean = false;
-
-    statuses!: any[];
+    private apiUrl = 'http://localhost:3000/pacientes';
 
     @ViewChild('dt') dt!: Table;
 
-    exportColumns!: ExportColumn[];
-
-    cols!: Column[];
-
     constructor(
-        private productService: ProductService,
         private messageService: MessageService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        private http: HttpClient
     ) {}
 
-    exportCSV() {
-        this.dt.exportCSV();
-    }
-
     ngOnInit() {
-        this.loadDemoData();
+        this.loadPacientes();
     }
 
-    loadDemoData() {
-        this.productService.getProducts().then((data) => {
-            this.products.set(data);
+    loadPacientes() {
+        this.http.get<Paciente[]>(this.apiUrl).subscribe({
+            next: (data) => {
+                this.pacientes.set(data);
+            },
+            error: (err) => {
+                console.error('Error al cargar pacientes:', err);
+                this.pacientes.set([]);
+            }
         });
-
-        this.statuses = [
-            { label: 'INSTOCK', value: 'instock' },
-            { label: 'LOWSTOCK', value: 'lowstock' },
-            { label: 'OUTOFSTOCK', value: 'outofstock' }
-        ];
-
-        this.cols = [
-            { field: 'code', header: 'Code', customExportHeader: 'Product Code' },
-            { field: 'name', header: 'Name' },
-            { field: 'image', header: 'Image' },
-            { field: 'price', header: 'Price' },
-            { field: 'category', header: 'Category' }
-        ];
-
-        this.exportColumns = this.cols.map((col) => ({ title: col.header, dataKey: col.field }));
-    }
-
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
 
     openNew() {
-        this.product = {};
+        this.paciente = { nombre: '', edad: 0, centroMedico: '', observaciones: '' };
         this.submitted = false;
-        this.productDialog = true;
+        this.pacienteDialog = true;
     }
 
-    editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
+    editPaciente(paciente: Paciente) {
+        this.paciente = { ...paciente };
+        this.pacienteDialog = true;
     }
 
-    deleteSelectedProducts() {
+    deletePaciente(paciente: Paciente) {
         this.confirmationService.confirm({
-            message: 'Are you sure you want to delete the selected products?',
-            header: 'Confirm',
+            message: '¿Seguro que quieres eliminar a ' + paciente.nombre + '?',
+            header: 'Confirmar',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.products.set(this.products().filter((val) => !this.selectedProducts?.includes(val)));
-                this.selectedProducts = null;
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Products Deleted',
-                    life: 3000
-                });
+                const updatedPacientes = this.pacientes().filter(p => p.id !== paciente.id);
+                this.saveToBackend(updatedPacientes);
             }
         });
     }
 
     hideDialog() {
-        this.productDialog = false;
+        this.pacienteDialog = false;
         this.submitted = false;
     }
 
-    deleteProduct(product: Product) {
-        this.confirmationService.confirm({
-            message: 'Are you sure you want to delete ' + product.name + '?',
-            header: 'Confirm',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.products.set(this.products().filter((val) => val.id !== product.id));
-                this.product = {};
+    savePaciente() {
+        this.submitted = true;
+        
+        if (this.paciente.nombre.trim() && this.paciente.edad && this.paciente.centroMedico) {
+            const pacientesArray = [...this.pacientes()];
+            
+            if (this.paciente.id) {
+                const index = this.findIndexById(this.paciente.id);
+                pacientesArray[index] = this.paciente;
+            } else {
+                this.paciente.id = this.createId();
+                pacientesArray.push(this.paciente);
+            }
+
+            this.saveToBackend(pacientesArray);
+        }
+    }
+
+    saveToBackend(updatedPacientes: Paciente[]) {
+        this.http.post(this.apiUrl, updatedPacientes).subscribe({
+            next: () => {
+                this.pacientes.set(updatedPacientes);
                 this.messageService.add({
                     severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Deleted',
+                    summary: 'Éxito',
+                    detail: this.paciente.id ? 'Paciente Actualizado' : 'Paciente Creado',
+                    life: 3000
+                });
+                this.pacienteDialog = false;
+                this.paciente = { nombre: '', edad: 0, centroMedico: '', observaciones: '' };
+            },
+            error: (err) => {
+                console.error('Error al guardar:', err);
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'No se pudo guardar los cambios',
                     life: 3000
                 });
             }
@@ -322,66 +202,10 @@ export class Crud implements OnInit {
     }
 
     findIndexById(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.products().length; i++) {
-            if (this.products()[i].id === id) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
+        return this.pacientes().findIndex(p => p.id === id);
     }
 
     createId(): string {
-        let id = '';
-        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (var i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
-    }
-
-    getSeverity(status: string) {
-        switch (status) {
-            case 'INSTOCK':
-                return 'success';
-            case 'LOWSTOCK':
-                return 'warn';
-            case 'OUTOFSTOCK':
-                return 'danger';
-            default:
-                return 'info';
-        }
-    }
-
-    saveProduct() {
-        this.submitted = true;
-        let _products = this.products();
-        if (this.product.name?.trim()) {
-            if (this.product.id) {
-                _products[this.findIndexById(this.product.id)] = this.product;
-                this.products.set([..._products]);
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Updated',
-                    life: 3000
-                });
-            } else {
-                this.product.id = this.createId();
-                this.product.image = 'product-placeholder.svg';
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Created',
-                    life: 3000
-                });
-                this.products.set([..._products, this.product]);
-            }
-
-            this.productDialog = false;
-            this.product = {};
-        }
+        return Math.random().toString(36).substr(2, 9);
     }
 }
