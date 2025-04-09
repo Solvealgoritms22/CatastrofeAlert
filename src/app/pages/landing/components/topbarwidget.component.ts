@@ -26,8 +26,7 @@ import { ButtonModule } from 'primeng/button';
         <!-- Texto para dispositivos móviles (visible solo en mobile) -->
         <div class="flex lg:hidden mt-2">
           <span class="text-surface-900 dark:text-surface-0 font-medium text-base">
-            Dona sangre: 809-604-3327
-            <i class="fa-duotone fa-solid fa-hand-holding-droplet fa-lg"></i>
+            <p>Ayuda a salvar vidas llamando al +1 809-604-3327</p>
           </span>
 
         </div>
@@ -39,8 +38,9 @@ import { ButtonModule } from 'primeng/button';
           <!-- Espacio para contenido opcional o adicional si se requiere -->
         </div>
         <!-- Texto para escritorio -->
-        <div class="px-0 py-4 text-surface-900 dark:text-surface-0 font-medium text-xl ml-12">
-          Dona sangre: 809-604-3327
+        <div class="px-0 text-surface-900 dark:text-surface-0 font-medium text-md ml-12">
+        <p>Ayuda a salvar vidas</p>
+        <p>Donando tu sangre, Tel: +1 809-604-3327</p>
         </div>
       </div>
     </div>
