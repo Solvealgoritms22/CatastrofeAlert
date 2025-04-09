@@ -56,11 +56,11 @@ import { CommonModule } from '@angular/common';
                             <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true" styleClass="mb-4" [fluid]="true" [feedback]="false"></p-password>
 
                             <div class="flex items-center justify-between mt-2 mb-8 gap-8">
-                                <div class="flex items-center">
+                                <div class=" items-center hidden">
                                     <p-checkbox [(ngModel)]="checked" id="rememberme1" binary class="mr-2"></p-checkbox>
                                     <label for="rememberme1">{{ 'REMEMBER_ME' | translate }}</label>
                                 </div>
-                                <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">{{ 'RECOVERY_PASSWORD' | translate }}</span>
+                                <span class="font-medium hidden no-underline ml-2 text-right cursor-pointer text-primary">{{ 'RECOVERY_PASSWORD' | translate }}</span>
                             </div>
                             <app-spinner-button label="{{ 'BUTTON_SIGNIN' | translate }}" [loading]="isLoading" styleClass="p-button-primary w-full" (clickEvent)="onLogin()"></app-spinner-button>
                         </div>
@@ -105,7 +105,7 @@ export class Login {
             .login(this.email, this.password)
             .then(() => {
                 this.isLoading = false;
-                this.router.navigate(['/']);
+                this.router.navigate(['/app/crud']);
             })
             .catch(() => {
                 this.isLoading = false;
@@ -122,6 +122,6 @@ export class Login {
     }
 
     goToLanding() {
-        this.router.navigate(['/landing']);
+        this.router.navigate(['/']);
     }
 }

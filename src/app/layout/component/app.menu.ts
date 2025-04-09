@@ -28,12 +28,12 @@ export class AppMenu {
                     {
                         label: 'Landing',
                         icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/landing']
+                        routerLink: ['/']
                     },
                     {
                         label: 'Crud Emergency',
                         icon: 'pi pi-fw pi-pencil',
-                        routerLink: ['/']
+                        routerLink: ['/app/crud']
                     },
                 ]
             },

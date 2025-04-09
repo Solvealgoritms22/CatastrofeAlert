@@ -7,18 +7,18 @@ import { Notfound } from './app/pages/notfound/notfound';
 import { AuthGuard } from './app/core/guards/auth.guard';
 
 export const appRoutes: Routes = [
+    { path: '', component: Landing }, // Landing en la raíz
     {
-        path: '',
+        path: 'app',
         component: AppLayout,
         children: [
-            { path: '', component: Crud, canActivate: [AuthGuard] },
+            { path: 'crud', component: Crud, canActivate: [AuthGuard] },
             { path: 'uikit', canActivate: [AuthGuard], loadChildren: () => import('./app/pages/uikit/uikit.routes') },
             { path: 'documentation', component: Documentation, canActivate: [AuthGuard] },
             { path: 'pages', canActivate: [AuthGuard], loadChildren: () => import('./app/pages/pages.routes') }
         ]
     },
-    { path: 'landing', component: Landing },
-    { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
+    { path: 'notfound', component: Notfound },
     { path: '**', redirectTo: '/notfound' }
 ];
