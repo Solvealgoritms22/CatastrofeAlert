@@ -9,10 +9,9 @@ import { ScrollTop } from 'primeng/scrolltop';
     standalone: true,
     imports: [RouterModule, ScrollTop],
     template: `<router-outlet>
-   <p-scrolltop 
-    [threshold]="100" 
-    icon="pi pi-arrow-up" 
-    [buttonProps]="{ severity: 'contrast', raised: true, rounded: true }" />
+        <div class="z-50 fixed">
+            <p-scrolltop [threshold]="100" icon="pi pi-arrow-up" [buttonProps]="{ severity: 'contrast', raised: true, rounded: true }" />
+        </div>
     </router-outlet>`
 })
 export class AppComponent implements OnInit {

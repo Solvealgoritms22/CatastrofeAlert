@@ -81,7 +81,7 @@ export class FeaturesWidget implements OnInit {
     @Input() set searchTerm(value: string) {
         this._searchTerm = value;
         this.filterPatients(value);
-        this.scrollToFirstMatch(value);
+        this.scrollToFirstMatch(value); // Ejecutamos el scroll inmediatamente
     }
 
     registroPacientes: Paciente[] = [];
@@ -99,6 +99,7 @@ export class FeaturesWidget implements OnInit {
             next: (data) => {
                 this.registroPacientes = data;
                 this.filteredPatients = [...data];
+                // Aplicar filtro inicial si hay searchTerm
                 if (this._searchTerm) {
                     this.filterPatients(this._searchTerm);
                     this.scrollToFirstMatch(this._searchTerm);
