@@ -35,8 +35,8 @@ import { ButtonModule } from 'primeng/button';
                     <button type="button" class="layout-topbar-action" (click)="toggleDarkMode()">
                         <i [ngClass]="{ 'pi ': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
                     </button>
+                    <p-button type="button" (onClick)="this.showLogoutConfirm()" [rounded]="true" icon="pi pi-sign-out" severity="secondary" />
                     <div class="relative">
-
                         <app-configurator />
                     </div>
                 </div>
