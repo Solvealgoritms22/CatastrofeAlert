@@ -150,15 +150,9 @@ La aplicación se conecta a una API REST para obtener y actualizar información:
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/usuario1">
-        <img src="https://github.com/identicons/usuario1.png" width="100px;" alt="Usuario 1"/><br />
-        <sub><b>Nombre Apellido</b></sub>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/usuario2">
-        <img src="https://github.com/identicons/usuario2.png" width="100px;" alt="Usuario 2"/><br />
-        <sub><b>Nombre Apellido</b></sub>
+      <a href="https://github.com/Solvealgoritms22">
+        <img src="https://avatars.githubusercontent.com/u/112198161?v=4" width="100px;" alt="Usuario 1"/><br />
+        <sub><b>Darling Fajardo</b></sub>
       </a>
     </td>
   </tr>
