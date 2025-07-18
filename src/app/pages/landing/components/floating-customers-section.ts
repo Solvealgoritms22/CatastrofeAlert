@@ -59,7 +59,7 @@ export class FloatingCustomersCarouselComponent {
         { src: 'assets/img/logo-card-removebg-preview.png', alt: 'Logo ZenTrailMs' },
         { src: 'assets/img/maxresdefault-removebg-preview.png', alt: 'Logo Wavelength' },
         { src: 'assets/img/QZ-RbE_s_400x400.png', alt: 'Logo AlphaHex' },
-        { src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Policia_nacional_emblema.png/1200px-Policia_nacional_emblema.png', alt: 'Logo Mistranet' },
+        { src: 'assets/img/pn.png', alt: 'Logo Mistranet' },
         { src: 'assets/img/defensa_civil.png', alt: 'Logo BriteMank' },
         { src: 'https://www.jetsetclubrd.com/images/foterlogoJS.webp', alt: 'Logo Limerantz' }
     ];
