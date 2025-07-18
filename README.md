@@ -155,6 +155,12 @@ La aplicación se conecta a una API REST para obtener y actualizar información:
         <sub><b>Darling Fajardo</b></sub>
       </a>
     </td>
+    <td align="center">
+      <a href="https://github.com/ricardobalbuena">
+        <img src="https://avatars.githubusercontent.com/u/29905435?v=4" width="100px;" alt="Usuario 2"/><br />
+        <sub><b>Ricardo Balbuena</b></sub>
+      </a>
+    </td>
   </tr>
 </table>
 
