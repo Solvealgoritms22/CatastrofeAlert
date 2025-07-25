@@ -110,7 +110,7 @@ npm install
 3. **Iniciar el servidor de desarrollo**
 
 ```bash
-npm start
+ng serve
 ```
 
 4. **Acceder a la aplicación**
