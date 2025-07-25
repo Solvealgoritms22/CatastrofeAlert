@@ -85,6 +85,12 @@ CatastrofeAlert/
 └── ...                          # Archivos de configuración
 ```
 
+## 🖥️ Demo visual
+
+<div align="center">
+  <img src="public/background.png" alt="Dashboard" width="600" />
+</div>
+
 ## 🚀 Instalación
 
 ### Prerrequisitos
