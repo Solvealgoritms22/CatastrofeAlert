@@ -85,6 +85,12 @@ CatastrofeAlert/
 └── ...                          # Archivos de configuración
 ```
 
+## 🖥️ Demo visual
+
+<div align="center">
+  <img src="public/background.png" alt="Dashboard" width="600" />
+</div>
+
 ## 🚀 Instalación
 
 ### Prerrequisitos
@@ -110,7 +116,7 @@ npm install
 3. **Iniciar el servidor de desarrollo**
 
 ```bash
-npm start
+ng serve
 ```
 
 4. **Acceder a la aplicación**
