@@ -16,5 +16,6 @@
     }
   ],
   "installCommand": "npm install",
-  "buildCommand": "npm run build:vercel"
+  "buildCommand": "ng build --configuration production"
+
 }
