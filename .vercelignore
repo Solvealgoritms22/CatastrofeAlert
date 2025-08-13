@@ -76,12 +76,3 @@ MIGRATION_PLAN.md
 
 # Development files
 .angular/
-.editorconfig
-.eslint.config.js
-.prettierignore
-.prettierrc.json
-postcss.config.js
-tailwind.config.js
-tsconfig.json
-tsconfig.app.json
-tsconfig.spec.json
