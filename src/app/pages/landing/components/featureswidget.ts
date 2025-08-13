@@ -96,7 +96,7 @@ interface Paciente {
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
                             <select
                                 [(ngModel)]="selectedStatus"
-                                class="w-full bg-transparent px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 text-sm sm:text-base">
+                                class="w-full bg-transparent px-4 py-3 border dark:bg-gray-800 dark:text-gray-400 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 text-sm sm:text-base">
                                 <option value="">Todos los estados</option>
                                 <option value="rescatado">Rescatado</option>
                                 <option value="hospitalizado">Hospitalizado</option>
@@ -104,7 +104,7 @@ interface Paciente {
                             </select>
                             <select
                                 [(ngModel)]="selectedHospital"
-                                class="w-full bg-transparent px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 text-sm sm:text-base">
+                                class="w-full bg-transparent px-4 py-3 border dark:bg-gray-800 dark:text-gray-400 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 text-sm sm:text-base">
                                 <option value="">Todos los hospitales</option>
                                 <option *ngFor="let hospital of hospitals" [value]="hospital">{{ hospital }}</option>
                             </select>
