@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     imports: [CommonModule],
     template: `
-        <section class="relative overflow-hidden py-12 flex justify-center">
+        <section class="relative overflow-hidden py-12 flex justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
             <div class="w-full max-w-5xl flex flex-nowrap gap-6 overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_white_128px,_white_calc(100%-128px),transparent_100%)]">
                 <!-- Contenedor con animación infinita -->
                 <div class="flex flex-nowrap items-center animate-infinite-scroll">
@@ -61,6 +61,5 @@ export class FloatingCustomersCarouselComponent {
         { src: 'assets/img/QZ-RbE_s_400x400.png', alt: 'Logo AlphaHex' },
         { src: 'assets/img/pn.png', alt: 'Logo Mistranet' },
         { src: 'assets/img/defensa_civil.png', alt: 'Logo BriteMank' },
-        { src: 'https://www.jetsetclubrd.com/images/foterlogoJS.webp', alt: 'Logo Limerantz' }
     ];
 }
