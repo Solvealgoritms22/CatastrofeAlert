@@ -3,3 +3,48 @@
 @use './assets/layout/layout.scss';
 @use 'primeicons/primeicons.css';
 @use './assets/demo/demo.scss';
+
+/* Estilos globales para scrollbars más finos */
+* {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(136, 136, 136, 0.5) transparent;
+}
+
+/* Chrome, Edge, Safari - Webkit */
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(136, 136, 136, 0.5);
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(136, 136, 136, 0.8);
+}
+
+/* Scrollbar específico para el body */
+body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(136, 136, 136, 0.6);
+}
+
+/* Scrollbar para áreas de contenido */
+.layout-main::-webkit-scrollbar {
+  width: 4px;
+}
+
+.layout-main::-webkit-scrollbar-thumb {
+  background-color: rgba(136, 136, 136, 0.4);
+}
