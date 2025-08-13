@@ -30,10 +30,12 @@ import { LayoutService } from '../../core/services/layout.service';
         <!-- Se aplica ngClass para activar la clase 'dark' basado en isDarkTheme -->
         <div [ngClass]="{'dark': isDarkTheme()}" class="bg-surface-0 dark:bg-surface-900">
             <div id="home" class="landing-wrapper overflow-hidden">
-                <topbar-widget class="py-6 px-6 mx-0 md:mx-12 lg:mx-20 lg:px-20 flex items-center justify-between relative lg:static"></topbar-widget>
-                <hero-widget (searchEvent)="onSearch($event)"></hero-widget>
-                <features-widget [searchTerm]="currentSearch"></features-widget>
-                <footer-widget></footer-widget>
+                <topbar-widget class="fixed top-0 left-0 right-0 z-50"></topbar-widget>
+                <div class="pt-16"> <!-- Padding for fixed topbar -->
+                    <hero-widget (searchEvent)="onSearch($event)"></hero-widget>
+                    <features-widget [searchTerm]="currentSearch"></features-widget>
+                    <footer-widget></footer-widget>
+                </div>
             </div>
         </div>
     `
