@@ -43,7 +43,7 @@ import { HERO_STYLES, HeroStyleConfig } from '../../../core/config/hero-styles.c
                        (loadeddata)="onVideoLoaded()"
                        (stalled)="onVideoPlayError()"
                        (suspend)="onVideoPlayError()">
-                    <source src="assets/videos/cne_background.webm" type="video/webm">
+                    <source src="assets/videos/background.mp4" type="video/mp4">
                     <!-- Fallback for browsers that don't support video -->
                 </video>
 
