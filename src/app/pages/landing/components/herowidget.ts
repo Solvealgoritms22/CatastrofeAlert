@@ -123,10 +123,10 @@ import { HERO_STYLES, HeroStyleConfig } from '../../../core/config/hero-styles.c
                                         [ngClass]="'focus:ring-' + currentStyle.theme.buttonGradient.split('-')[2] + '-400/50'"
                                     />
                                     <!-- Search Suggestions -->
-                                    <div *ngIf="searchSuggestions.length > 0" class="absolute top-full mt-2 w-full bg-white rounded-xl shadow-2xl border border-gray-200 z-50">
+                                    <div *ngIf="searchSuggestions.length > 0" class="absolute top-full mt-2 w-full dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 z-50">
                                         <div *ngFor="let suggestion of searchSuggestions"
                                              (click)="selectSuggestion(suggestion)"
-                                             class="px-4 py-3 hover:bg-gray-100 cursor-pointer transition-colors">
+                                             class="px-4 py-3 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-xl hover:bg-gray-100 cursor-pointer transition-colors">
                                             <i class="pi pi-user text-gray-400 mr-2"></i>
                                             {{ suggestion }}
                                         </div>
