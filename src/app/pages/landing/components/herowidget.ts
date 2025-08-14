@@ -43,7 +43,7 @@ import { HERO_STYLES, HeroStyleConfig } from '../../../core/config/hero-styles.c
                        (loadeddata)="onVideoLoaded()"
                        (stalled)="onVideoPlayError()"
                        (suspend)="onVideoPlayError()">
-                    <source src="assets/videos/background.mp4" type="video/mp4">
+                    <source src="assets/videos/background.mp4" type="video/mp4" muted>
                     <!-- Fallback for browsers that don't support video -->
                 </video>
 
@@ -123,10 +123,10 @@ import { HERO_STYLES, HeroStyleConfig } from '../../../core/config/hero-styles.c
                                         [ngClass]="'focus:ring-' + currentStyle.theme.buttonGradient.split('-')[2] + '-400/50'"
                                     />
                                     <!-- Search Suggestions -->
-                                    <div *ngIf="searchSuggestions.length > 0" class="absolute top-full mt-2 w-full bg-white rounded-xl shadow-2xl border border-gray-200 z-50">
+                                    <div *ngIf="searchSuggestions.length > 0" class="absolute top-full mt-2 w-full dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 z-50">
                                         <div *ngFor="let suggestion of searchSuggestions"
                                              (click)="selectSuggestion(suggestion)"
-                                             class="px-4 py-3 hover:bg-gray-100 cursor-pointer transition-colors">
+                                             class="px-4 py-3 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-xl hover:bg-gray-100 cursor-pointer transition-colors">
                                             <i class="pi pi-user text-gray-400 mr-2"></i>
                                             {{ suggestion }}
                                         </div>
@@ -349,15 +349,24 @@ export class HeroWidget implements OnInit {
 
     startVideo(): void {
         if (!this.videoStarted && !this.videoError) {
-            this.videoStarted = true;
             // Small delay to ensure the video element is visible before playing
             setTimeout(() => {
                 if (this.heroVideo && this.heroVideo.nativeElement) {
-                    this.heroVideo.nativeElement.play().catch(error => {
-                        console.error('Error playing video:', error);
-                        // Don't set videoError on autoplay failure, show play button instead
-                        this.videoStarted = false;
-                    });
+                    const playPromise = this.heroVideo.nativeElement.play();
+                    
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            // Video started successfully
+                            this.videoStarted = true;
+                        }).catch(error => {
+                            console.error('Error playing video:', error);
+                            // Don't set videoError on autoplay failure, show play button instead
+                            this.videoStarted = false;
+                        });
+                    } else {
+                        // For older browsers that don't return a promise
+                        this.videoStarted = true;
+                    }
                 }
             }, 100);
         }
@@ -366,10 +375,17 @@ export class HeroWidget implements OnInit {
     attemptAutoplay(): void {
         if (!this.videoStarted && !this.videoError && this.heroVideo && this.heroVideo.nativeElement) {
             // Try to play with user interaction hint
-            this.heroVideo.nativeElement.play().catch(() => {
-                // Autoplay blocked, show play button
-                this.videoStarted = false;
-            });
+            const playPromise = this.heroVideo.nativeElement.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Autoplay started successfully
+                    this.videoStarted = true;
+                }).catch(() => {
+                    // Autoplay blocked, show play button
+                    this.videoStarted = false;
+                });
+            }
         }
     }
 }
